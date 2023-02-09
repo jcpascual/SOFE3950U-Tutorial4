@@ -25,7 +25,13 @@ void display_categories(void)
 // Displays the question for the category and dollar value
 void display_question(char *category, int value)
 {
-
+    for (int i = 0; i < NUM_QUESTIONS; i++)
+    {
+        if (strncmp(questions[i].category, category, MAX_LEN) == 0 && questions[i].value == value)
+        {
+            printf("%s:\n%s", questions[i].question, questions[i].question);
+        }
+    }
 }
 
 // Returns true if the answer is correct for the question for that category and dollar value
