@@ -32,6 +32,15 @@ void display_question(char *category, int value)
 bool valid_answer(char *category, int value, char *answer)
 {
     // Look into string comparison functions
+
+    for (int i = 0; i < NUM_QUESTIONS; i++)
+    {
+        if (strncmp(questions[i].category, category, MAX_LEN) == 0 && questions[i].value == value)
+        {
+            return strncmp(questions[i].answer, answer, MAX_LEN) == 0;
+        }
+    }
+
     return false;
 }
 
