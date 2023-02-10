@@ -13,8 +13,48 @@
 // Initializes the array of questions for the game
 void initialize_game(void)
 {
-    // initialize each question struct and assign it to the questions array
-    questions = calloc(NUM_QUESTIONS, sizeof(question));
+    // open the questions file
+    FILE* f = fopen("questions.txt", "r");
+
+    // read the number of questions from the first line
+    fscanf(f, "%d\n", &num_questions);
+
+    // dynamically allocate memory for the questions array
+    questions = calloc(num_questions, sizeof(question));
+    
+    int idx = 0;
+
+    // fgets buffer - 3x the max length of a string + 10 for the separators and value
+    char buffer[MAX_LEN_LINE];
+
+    while (fgets(buffer, MAX_LEN_LINE, f) != NULL)
+    {
+        // strip the newline character from the end of the string
+        size_t len = strlen(buffer);
+        if (buffer[len - 1] == '\n')
+        {
+            buffer[len - 1] = '\0';
+        }
+
+        // parse the line into the category, question, answer, and value
+        char* token = strtok(buffer, ";");
+        strncpy(questions[idx].category, token, MAX_LEN);
+
+        token = strtok(NULL, ";");
+        strncpy(questions[idx].question, token, MAX_LEN);
+
+        token = strtok(NULL, ";");
+        strncpy(questions[idx].answer, token, MAX_LEN);
+
+        token = strtok(NULL, ";");
+        questions[idx].value = atoi(token);
+
+        questions[idx].answered = false;
+
+        idx++;
+    }
+
+    fclose(f);
 }
 
 // Displays each of the remaining categories and question dollar values that have not been answered
@@ -22,7 +62,7 @@ void display_categories(void)
 {
     // print categories and dollar values for each unanswered question in questions array
 
-    for (int i = 0; i < NUM_QUESTIONS; i++)
+    for (int i = 0; i < num_questions; i++)
     {
         question* q = &questions[i];
 
@@ -36,7 +76,7 @@ void display_categories(void)
 // Displays the question for the category and dollar value
 void display_question(char *category, int value)
 {
-    for (int i = 0; i < NUM_QUESTIONS; i++)
+    for (int i = 0; i < num_questions; i++)
     {
         if (strncmp(questions[i].category, category, MAX_LEN) == 0 && questions[i].value == value)
         {
@@ -50,7 +90,7 @@ bool valid_answer(char *category, int value, char *answer)
 {
     // Look into string comparison functions
 
-    for (int i = 0; i < NUM_QUESTIONS; i++)
+    for (int i = 0; i < num_questions; i++)
     {
         if (strncmp(questions[i].category, category, MAX_LEN) == 0 && questions[i].value == value)
         {
@@ -66,7 +106,7 @@ bool already_answered(char *category, int value)
 {
     // lookup the question and see if it's already been marked as answered
 
-    for (int i = 0; i < NUM_QUESTIONS; i++)
+    for (int i = 0; i < num_questions; i++)
     {
         if (strncmp(questions[i].category, category, MAX_LEN) == 0 && questions[i].value == value)
         {

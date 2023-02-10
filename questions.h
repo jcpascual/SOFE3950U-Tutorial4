@@ -11,10 +11,8 @@
 #include <stdbool.h>
 
 #define MAX_LEN 256
+#define MAX_LEN_LINE MAX_LEN * 3 + 10
 #define NUM_CATEGORIES 3
-// The number of questions, you can use this in your functions in
-// questions.c, this can be accessed in questions.c
-#define NUM_QUESTIONS 12
 
 // List of 3 categories as array of strings
 static char categories[NUM_CATEGORIES][MAX_LEN] = {
@@ -32,9 +30,9 @@ typedef struct {
     bool answered;
 } question;
 
-// An array of 12 questions (4 for each category), initialized in initialize_game
-// this may need to be a pointer if you want it set dynamically
+// An array of questions initialized in initialize_game
 question* questions;
+int num_questions = 0;
 
 // Initializes the array of questions for the game
 extern void initialize_game(void);
