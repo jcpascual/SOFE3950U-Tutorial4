@@ -14,12 +14,8 @@
 #define MAX_LEN_LINE MAX_LEN * 3 + 10
 #define NUM_CATEGORIES 3
 
-// List of 3 categories as array of strings
-static char categories[NUM_CATEGORIES][MAX_LEN] = {
-    "programming", 
-    "algorithms", 
-    "databases"
-};
+// An array of categories initialized in initialize_game
+char** categories;
 
 // Questions struct for each question
 typedef struct {

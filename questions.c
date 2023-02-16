@@ -10,13 +10,40 @@
 #include <string.h>
 #include "questions.h"
 
+int num_categories = 0;
 int num_questions = 0;
 
 // Initializes the array of questions for the game
 void initialize_game(void)
 {
+    // open the categories file
+    FILE* f = fopen("categories.txt", "r");
+
+    // read the number of categories from the first line
+    fscanf(f, "%d\n", &num_categories);
+
+    // dynamically allocate memory for the categories array
+    categories = calloc(num_categories, sizeof(char*));
+
+    // read the categories from the file
+    for (int i = 0; i < num_categories; i++)
+    {
+        categories[i] = calloc(MAX_LEN, sizeof(char));
+
+        fgets(categories[i], MAX_LEN, f);
+
+        // strip the newline character from the end of the string
+        size_t len = strlen(categories[i]);
+        if (categories[i][len - 1] == '\n')
+        {
+            categories[i][len - 1] = '\0';
+        }
+    }
+
+    fclose(f);
+
     // open the questions file
-    FILE* f = fopen("questions.txt", "r");
+    f = fopen("questions.txt", "r");
 
     // read the number of questions from the first line
     fscanf(f, "%d\n", &num_questions);
