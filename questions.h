@@ -48,4 +48,7 @@ extern bool valid_answer(char *category, int value, char *answer);
 // Returns true if the question has already been answered
 extern bool already_answered(char *category, int value);
 
+// Returns true if all questions have been answered
+extern bool is_all_answered(void);
+
 #endif /* QUESTIONS_H_ */

@@ -118,3 +118,17 @@ bool already_answered(char *category, int value)
 
     return false;
 }
+
+// Returns true if all questions have been answered
+bool is_all_answered(void)
+{
+    for (int i = 0; i < num_questions; i++)
+    {
+        if (!questions[i].answered)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
