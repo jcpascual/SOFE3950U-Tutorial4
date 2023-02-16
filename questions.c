@@ -115,7 +115,7 @@ void display_question(char *category, int value)
     {
         if (strncmp(questions[i].category, category, MAX_LEN) == 0 && questions[i].value == value)
         {
-            printf("%s:\n%s", questions[i].question, questions[i].question);
+            printf("%s for $%d: \n%s", questions[i].category, questions[i].value, questions[i].question);
         }
     }
 }
