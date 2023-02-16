@@ -1,3 +1,10 @@
-2
-category 1;question 1;answer 1;100
-category 2;question 2;answer 2;200
+9
+programming;This programming language shares its name with an island in Indonesia;Java;100
+programming;The GCC compiler is part of this software package;GNU;200
+programming;This person created the C++ programming language;Bjarne Stroustrup;300
+science;This element has the symbol Au;gold;100
+science;When two magnets of the same pole are placed together, they do this;repel;200
+science;This is the name of the process by which plants make their own food;photosynthesis;300
+geography;This country is the smallest in the world;Vatican City;100
+geography;The first person to reach the North Pole was this explorer;Robert Peary;200
+geography;A person who creates maps is called this;cartographer;300
