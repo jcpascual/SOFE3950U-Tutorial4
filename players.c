@@ -32,7 +32,7 @@ void update_score(player *players, int num_players, char *name, int score)
     {
         if (strncmp(players[i].name, name, MAX_LEN) == 0)
         {
-            players[i].score = score;
+            players[i].score += score;
             return;
         }
     }
