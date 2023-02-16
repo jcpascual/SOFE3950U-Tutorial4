@@ -50,4 +50,7 @@ extern bool is_all_answered(void);
 // Returns true if the category exists
 extern bool category_exists(char* category);
 
+// Returns true if the question exists
+bool question_exists(char* category, int value);
+
 #endif /* QUESTIONS_H_ */

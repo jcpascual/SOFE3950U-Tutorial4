@@ -178,3 +178,17 @@ bool category_exists(char* category)
 
     return false;
 }
+
+bool question_exists(char* category, int value)
+{
+    for (int i = 0; i < num_questions; i++)
+    {
+        if (strncmp(questions[i].category, category, MAX_LEN) == 0 && questions[i].value == value)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
