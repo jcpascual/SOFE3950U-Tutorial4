@@ -106,14 +106,145 @@ int main(int argc, char *argv[])
         players[i].score = 0;
     }
 
-    // Perform an infinite loop getting command input from users until game ends
-    while (fgets(buffer, BUFFER_LEN, stdin) != NULL)
+    while (!is_all_answered())
     {
-        // Call functions from the questions and players source files
+        char current_player[BUFFER_LEN];
+        char current_category[BUFFER_LEN];
+        int current_value = 0;
 
-        // Execute the game until all questions are answered
+        while (true)
+        {
+            printf("\nWho will answer next? ");
+            fgets(buffer, BUFFER_LEN, stdin);
 
-        // Display the final results and exit
+            // Strip the newline character from the end of the string
+            size_t len = strlen(buffer);
+            if (buffer[len - 1] == '\n')
+            {
+                buffer[len - 1] = '\0';
+            }
+
+            // Check if this is an empty string
+            len = strlen(buffer);
+            if (len == 0)
+            {
+                printf("You must enter a player name\n");
+
+                continue;
+            }
+
+            // Check if the player name is valid
+            if (!player_exists(players, num_players, buffer))
+            {
+                printf("Invalid player name\n");
+
+                continue;
+            }
+
+            strncpy(current_player, buffer, BUFFER_LEN);
+
+            break;
+        }
+
+        printf("%s is answering\n\n", current_player);
+
+        display_categories();
+
+        while (true)
+        {
+            printf("\nWhat category? ");
+            fgets(buffer, BUFFER_LEN, stdin);
+
+            // Strip the newline character from the end of the string
+            size_t len = strlen(buffer);
+            if (buffer[len - 1] == '\n')
+            {
+                buffer[len - 1] = '\0';
+            }
+
+            // Check if the category name is valid
+            if (!category_exists(buffer))
+            {
+                printf("Invalid category\n");
+
+                continue;
+            }
+
+            strncpy(current_category, buffer, BUFFER_LEN);
+
+            break;
+        }
+
+        while (true)
+        {
+            printf("\nFor what value? ");
+            fgets(buffer, BUFFER_LEN, stdin);
+
+            current_value = atoi(buffer);
+
+            if (current_value == 0)
+            {
+                printf("Invalid value\n");
+
+                continue;
+            }
+
+            // Check if the question is valid
+            if (!question_exists(current_category, current_value))
+            {
+                printf("Invalid question\n");
+
+                continue;
+            }
+
+            break;
+        }
+
+        printf("\n");
+
+        if (already_answered(current_category, current_value))
+        {
+            printf("That question has already been answered\n");
+
+            continue;
+        }
+
+        display_question(current_category, current_value);
+        
+        printf("\n");
+
+        while (true)
+        {
+            printf("\nYour answer? ");
+            fgets(buffer, BUFFER_LEN, stdin);
+
+            // Strip the newline character from the end of the string
+            size_t len = strlen(buffer);
+            if (buffer[len - 1] == '\n')
+            {
+                buffer[len - 1] = '\0';
+            }
+
+            if (valid_answer(current_category, current_value, buffer))
+            {
+                printf("\nCorrect!\n");
+
+                update_score(players, num_players, current_player, current_value);
+            }
+            else
+            {
+                printf("\nIncorrect!\n");
+            }
+
+            set_answered(current_category, current_value);
+
+            break;
+        }
     }
+
+    printf("\nThe game is over!\n\n");
+
+    show_results(players, num_players);
+
     return EXIT_SUCCESS;
 }
