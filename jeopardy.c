@@ -15,7 +15,7 @@
 
 // Put macros or constants here using #define
 #define BUFFER_LEN 256
-#define NUM_PLAYERS 4
+#define MAX_PLAYERS 4
 
 // Put global environment variables here
 
@@ -28,8 +28,8 @@ void show_results(player *players, int num_players);
 
 int main(int argc, char *argv[])
 {
-    // An array of 4 players, may need to be a pointer if you want it set dynamically
-    player players[NUM_PLAYERS];
+    // An array of players
+    player players[MAX_PLAYERS];
     
     // Input buffer and and commands
     char buffer[BUFFER_LEN] = { 0 };
@@ -37,10 +37,45 @@ int main(int argc, char *argv[])
     // Display the game introduction and initialize the questions
     initialize_game();
 
-    // Prompt for players names
-    
-    // initialize each of the players in the array
+    int num_players = 0;
 
+    // Prompt for players names
+    for (int i = 0; i < MAX_PLAYERS; i++)
+    {
+        printf("Enter player %d name (empty for no player): ", i + 1);
+        fgets(buffer, BUFFER_LEN, stdin);
+
+        // Strip the newline character from the end of the string
+        size_t len = strlen(buffer);
+        if (buffer[len - 1] == '\n')
+        {
+            buffer[len - 1] = '\0';
+        }
+
+        // Check if this is an empty string
+        len = strlen(buffer);
+        if (len == 0)
+        {
+            // If this is the first player, prompt again. There can never be zero players.
+            if (i == 0)
+            {
+                i--;
+
+                printf("You must enter at least one player\n");
+
+                continue;
+            }
+
+            num_players = i;
+
+            break;
+        }
+
+        // Initialize the player name and score
+        strncpy(players[i].name, buffer, MAX_LEN);
+        players[i].score = 0;
+    }
+    
     // Perform an infinite loop getting command input from users until game ends
     while (fgets(buffer, BUFFER_LEN, stdin) != NULL)
     {
