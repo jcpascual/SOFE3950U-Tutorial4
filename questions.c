@@ -192,3 +192,13 @@ bool question_exists(char* category, int value)
     return false;
 }
 
+void set_answered(char* category, int value)
+{
+    for (int i = 0; i < num_questions; i++)
+    {
+        if (strncmp(questions[i].category, category, MAX_LEN) == 0 && questions[i].value == value)
+        {
+            questions[i].answered = true;
+        }
+    }
+}

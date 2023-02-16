@@ -53,4 +53,7 @@ extern bool category_exists(char* category);
 // Returns true if the question exists
 bool question_exists(char* category, int value);
 
+// Sets a question as answered
+void set_answered(char* category, int value);
+
 #endif /* QUESTIONS_H_ */
