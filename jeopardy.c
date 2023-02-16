@@ -75,7 +75,14 @@ int main(int argc, char *argv[])
         strncpy(players[i].name, buffer, MAX_LEN);
         players[i].score = 0;
     }
-    
+
+    // Initialize all remaining players with an empty name
+    for (int i = num_players; i < MAX_PLAYERS; i++)
+    {
+        players[i].name[0] = '\0';
+        players[i].score = 0;
+    }
+
     // Perform an infinite loop getting command input from users until game ends
     while (fgets(buffer, BUFFER_LEN, stdin) != NULL)
     {
