@@ -32,7 +32,6 @@ typedef struct {
 
 // An array of questions initialized in initialize_game
 question* questions;
-int num_questions = 0;
 
 // Initializes the array of questions for the game
 extern void initialize_game(void);
