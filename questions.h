@@ -47,4 +47,7 @@ extern bool already_answered(char *category, int value);
 // Returns true if all questions have been answered
 extern bool is_all_answered(void);
 
+// Returns true if the category exists
+extern bool category_exists(char* category);
+
 #endif /* QUESTIONS_H_ */

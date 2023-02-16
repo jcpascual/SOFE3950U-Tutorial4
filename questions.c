@@ -69,6 +69,12 @@ void initialize_game(void)
         char* token = strtok(buffer, ";");
         strncpy(questions[idx].category, token, MAX_LEN);
 
+        if (!category_exists(questions[idx].category))
+        {
+            printf("Invalid category: %s\n", questions[idx].category);
+            exit(1);
+        }
+
         token = strtok(NULL, ";");
         strncpy(questions[idx].question, token, MAX_LEN);
 
@@ -158,4 +164,17 @@ bool is_all_answered(void)
     }
 
     return true;
+}
+
+bool category_exists(char* category)
+{
+    for (int i = 0; i < num_categories; i++)
+    {
+        if (strncmp(categories[i], category, MAX_LEN) == 0)
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
