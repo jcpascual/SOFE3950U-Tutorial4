@@ -20,7 +20,21 @@
 // Put global environment variables here
 
 // Processes the answer from the user containing what is or who is and tokenizes it to retrieve the answer.
-void tokenize(char *input, char **tokens);
+void tokenize(char* input, char** output)
+{
+    if (strstr(input, "what is") != NULL)
+    {
+        *output = input + strlen("what is ");
+    }
+    else if (strstr(input, "who is") != NULL)
+    {
+        *output = input + strlen("who is ");
+    }
+    else
+    {
+        *output = input;
+    }
+}
 
 // Displays the game results for each player, their name and final score, ranked from first to last place
 void show_results(player *players, int num_players)
@@ -218,6 +232,9 @@ int main(int argc, char *argv[])
             printf("\nYour answer? ");
             fgets(buffer, BUFFER_LEN, stdin);
 
+            char* processed_answer;
+            tokenize(buffer, &processed_answer);
+
             // Strip the newline character from the end of the string
             size_t len = strlen(buffer);
             if (buffer[len - 1] == '\n')
@@ -225,7 +242,7 @@ int main(int argc, char *argv[])
                 buffer[len - 1] = '\0';
             }
 
-            if (valid_answer(current_category, current_value, buffer))
+            if (valid_answer(current_category, current_value, processed_answer))
             {
                 printf("\nCorrect!\n");
 
